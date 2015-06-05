@@ -14,6 +14,11 @@ int outValvePos = 0;
 
 int pos=0;
 
+int pumpPressPin=A0;
+int muscPressPin=A1;
+int pumpPressReading=0;
+int muscPressReading=0;
+
 void setup()
 {
   inValveServo.attach(inValvePin);  // attaches the servo on pin 9 to the servo object
@@ -34,5 +39,12 @@ void loop()
     outValveServo.write(pos);     // tell servo to go to position in variable 'pos'
     delay(500);                       // waits 15ms for the servo to reach the position
   }
+  pumpPressReading=readingToPSI(analogRead(pumpPressPin));
+  muscPressReading=readingToPSI(analogRead(muscPressPin));
 }
 
+float readingToPSI(int reading){
+  float volt=reading/1023;
+  float PSI=81.879*volt-78.228;
+  return PSI
+}
